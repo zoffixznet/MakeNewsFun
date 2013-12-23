@@ -21,7 +21,7 @@ sub make_news {
         return "<base href='$url'>" . $res->decoded_content;
     }
     else {
-        return '[ERROR]: ' . $res->status_code . ' ' . $res->status_line;
+        return '[ERROR]: ' . $res->status_line;
     }
 }
 
