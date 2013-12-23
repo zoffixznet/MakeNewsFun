@@ -1,0 +1,9 @@
+<form action="/" method="GET">
+<div>
+    <label>Enter news story URL:</label><input type="text" name="url"><input type="submit" value="Go!">
+</div>
+</form>
+
+<hr>
+
+<iframe src="/display/[% c.request.param('url') | html %]"></iframe>
