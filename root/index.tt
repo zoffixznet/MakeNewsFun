@@ -1,3 +1,11 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Substitution News - http://xkcd.com/1288/</title>
+
+<link rel="stylesheet" type="text/css" href="/main.css" media="screen,tv,projection">
+<body class="body_home">
+
 <form action="/" method="GET">
 <div>
     <label>Enter news story URL:</label><input type="text" name="url"><input type="submit" value="Go!">
@@ -7,3 +15,10 @@
 <hr>
 
 <iframe src="/display/[% c.request.param('url') | uri %]" style="width: 99%; height: 700px"></iframe>
+
+
+<script type="text/javascript" src="/main.js"></script>
+
+</body>
+</html>
+

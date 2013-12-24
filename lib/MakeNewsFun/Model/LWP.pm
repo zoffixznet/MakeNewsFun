@@ -6,6 +6,7 @@ use HTML::TokeParser::Simple;
 use namespace::autoclean;
 use URI;
 use URI::Escape;
+use Encode;
 
 extends 'Catalyst::Model';
 
@@ -22,7 +23,8 @@ sub make_news {
     my $res = $ua->get( $url );
 
     if ( $res->is_success ) {
-        return __process_story( $url, $res->decoded_content );
+        return encode 'utf8',
+            __process_story( $url, $res->decoded_content );
     }
     else {
         return '[ERROR]: ' . $res->status_line;
@@ -37,17 +39,22 @@ sub __process_story {
     my $subs = ___subs();
 
     my $domain = join '', $url->scheme, '://', $url->authority;
+    my $is_base = 0;
     while ( my $token = $p->get_token ) {
         unless ( $token->is_text ) {
+            $is_base = 1 if $token->is_tag('base');
+
             if ( $token->is_tag('a') and defined $token->get_attr('href')
             ) {
                 my $new_url
                 = uri_escape
                     $url->new( $token->get_attr('href') )->abs( $domain );
 
+                $token->set_attr('base', '');
+
                 $token->set_attr(
                     'href',
-                    'http://0:3000/?url=' . $new_url
+                    'http://0:3000/display/' . $new_url
                 );
             }
 
@@ -62,7 +69,7 @@ sub __process_story {
         $out_html .= $v;
     }
 
-    return "<base href='$url'>" . $out_html;
+    return ( $is_base ? '' : "<base href='$url'>" ) . $out_html;
 }
 
 sub preserve_case {
@@ -78,9 +85,14 @@ sub preserve_case {
 
 sub ___subs {
     return +{
+        scientists      => 'nerds with labcoats',
+        'climate change' => 'climate fuckover',
+        'Earth'         => 'this fucking planet',
+        'global warming' => 'global heating',
         witnesses       => 'these dudes I know',
         allegedly       => 'kinda probably',
         'new study'     => 'tumblr post',
+        'study'         => 'facebook post',
         rebuild         => 'avenge',
         space           => 'spaaace',
         'google glass'  => 'virtual boy',

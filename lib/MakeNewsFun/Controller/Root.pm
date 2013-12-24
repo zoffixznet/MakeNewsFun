@@ -2,7 +2,6 @@ package MakeNewsFun::Controller::Root;
 use Moose;
 
 use namespace::autoclean;
-
 BEGIN { extends 'Catalyst::Controller' }
 
 
@@ -16,7 +15,7 @@ sub index :Path :Args(0) {
 sub display :Local :Args(1){
     my ( $self, $c, $url ) = @_;
 
-    $c->stash( story => $c->model('LWP')->make_news( $url ) );
+    $c->stash( zstory =>$c->model('LWP')->make_news( $url ) );
 }
 
 sub default :Path {
