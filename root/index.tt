@@ -6,4 +6,4 @@
 
 <hr>
 
-<iframe src="/display/[% c.request.param('url') | html %]"></iframe>
+<iframe src="/display/[% c.request.param('url') | uri %]" style="width: 99%; height: 700px"></iframe>
